@@ -6,7 +6,6 @@ const HomePage = () => {
     <div>
       Homepage
 
-      <button onClick={<Navigate to="/signup" />}>signup</button>
     </div>
   )
 }

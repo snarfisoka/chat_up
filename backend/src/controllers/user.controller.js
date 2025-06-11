@@ -10,7 +10,7 @@ export async function getRecommendedUsers(req, res) {
         const recommendedUsers = await User.find({
             $and: [
                 {_id: {$ne: currentUserId}}, //exclude current user
-                {$id: {$nin: currentUser.friends}}, //exclude current user's friends
+                {_id: {$nin: currentUser.friends}}, //exclude current user's friends
                 {isOnboarded: true}
             ]
         })
@@ -30,7 +30,7 @@ export async function getFriends(req, res) {
         res.status(200).json(user.friends);
     } catch (error) {
         console.error("Error in getFriends controller", error.message);
-        res.status(500).json({ message: "Internal Serverl Error" });
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }
 
@@ -68,12 +68,12 @@ export async function sendFriendRequest(req, res) {
             .json({ message: "A friend request already exists between you and this user" });
         }
 
-        const FriendRequest = await FriendRequest.create({
+        const friendRequest = await FriendRequest.create({
             sender: myId,
             recipient: recipientId,
         });
 
-        res.status(200).json(FriendRequest);
+        res.status(200).json(friendRequest);
     } catch (error) {
         console.error("Error in sendFriendRequest controller", error.message);
         res.status(500).json({ message: "Internal Server Error" });

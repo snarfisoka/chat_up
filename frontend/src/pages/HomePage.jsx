@@ -10,35 +10,35 @@ const HomePage = () => {
     const queryClient = useQueryClient();
     const [outgoingRequestIds, setOutgoingRequestIds] = useState(new Set());
     
-    const {data:friends=[], isLoading:loadingFriends} = useQuery({
+    const {data: friends = [], isLoading: loadingFriends} = useQuery({
       queryKey: ['friends'],
       queryFn: getUserFriends
     })
 
-    const {data:recommendedUsers=[], isLoading:loadingUsers} = useQuery({
+    const {data: recommendedUsers = [], isLoading: loadingUsers} = useQuery({
       queryKey: ['users'],
       queryFn: getRecommendedUsers
     })
 
-    const {data:outgoingFriendReqs} = useQuery({
+    const {data: outgoingFriendReqs} = useQuery({
       queryKey: ['outgoingFriendReqs'],
       queryFn: getOutgoingFriendReqs,
     })
 
-    const {mutate:sendRequestMutation, isPending} = useMutation({
+    const {mutate: sendRequestMutation, isPending} = useMutation({
       mutationFn: sendFriendRequest,
       onSuccess: () => queryClient.invalidateQueries({ queryKey: ["outgoingFriendReqs"] }),
     });
 
     useEffect(() => {
       const outgoingIds = new Set();
-      if(outgoingFriendReqs && outgoingFriendReqs.length > 0){
+      if (outgoingFriendReqs && outgoingFriendReqs.length > 0) {
         outgoingFriendReqs.forEach((req) => {
           outgoingIds.add(req.recipient._id)
-        })
-        setOutgoingRequestIds(outgoingIds)
+        });
+        setOutgoingRequestIds(outgoingIds);
       }
-    }, [outgoingFriendReqs])
+    }, [outgoingFriendReqs]);
 
   return (
     <div className='p-4 sm:p-6 lg:p-8'>
@@ -50,6 +50,7 @@ const HomePage = () => {
             Friend Requests
           </Link>
         </div>
+        
         {loadingFriends ? (
           <div className='flex justify-center py-12'>
             <span className='loading loading-spinner loading-lg' />

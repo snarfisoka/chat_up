@@ -89,7 +89,7 @@ export async function login(req, res) {
             secure: process.env.NODE_ENV === "production",
         })
 
-        res.status(200).json({ sucess: true, user });
+        res.status(200).json({ success: true, user });
     
     } catch (error) {
         console.log("Error in login controller", error);

@@ -103,6 +103,8 @@ const CallContent = () => {
   const navigate = useNavigate();
 
   if(callingState === CallingState.LEFT) return navigate("/")
+    return (
+  )
 }
 
 export default CallPage

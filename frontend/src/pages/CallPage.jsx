@@ -1,23 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react'
+import useAuthUser from '../hooks/useAuthUser';
 import { useNavigate, useParams } from 'react-router'
 import { getStreamToken } from '../lib/api';
 
-import toast from "react-hot-toast";
 
 import {
   StreamVideo,
   StreamVideoClient,
   StreamCall,
-  CallControl,
+  CallControls,
   SpeakerLayout,
   StreamTheme,
   CallingState,
-  UseCallStateHooks,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
 
-import "@stream-io/video-react-sdk/dist/css/style.css";
+import "@stream-io/video-react-sdk/dist/css/styles.css";
+import toast from "react-hot-toast";
 import PageLoader from '../components/PageLoader';
 
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
@@ -28,7 +28,7 @@ const CallPage = () => {
   const [call, setCall] = useState(null);
   const [isConnecting, setIsConnecting] = useState(true);
 
-  const { authUser, isLoading } = useQuery();
+  const { authUser, isLoading } = useAuthUser();
 
   const { data: tokenData } = useQuery({
     queryKey: ["streamToken"],
@@ -47,13 +47,13 @@ const CallPage = () => {
           id: authUser._id,
           name: authUser.fullName,
           image: authUser.profilePic,
-        }
+        };
 
         const videoClient = new StreamVideoClient({
           apiKey: STREAM_API_KEY,
           user,
           token: tokenData.token,
-        })
+        });
 
         const callInstance = videoClient.call("default", callId);
 
@@ -70,7 +70,7 @@ const CallPage = () => {
       } finally {
         setIsConnecting(false);
       }
-    }
+    };
     initCall();
   }, [tokenData, authUser, callId]);
 
@@ -84,7 +84,6 @@ const CallPage = () => {
             <StreamCall call={call}>
               <CallContent />
             </StreamCall>
-
           </StreamVideo>
         ) : (
           <div className='flex items-center justify-center h-full'>
@@ -104,7 +103,11 @@ const CallContent = () => {
 
   if(callingState === CallingState.LEFT) return navigate("/")
     return (
+      <StreamTheme>
+        <SpeakerLayout />
+        <CallControls />
+      </StreamTheme>
   )
 }
 
-export default CallPage
+export default CallPage;

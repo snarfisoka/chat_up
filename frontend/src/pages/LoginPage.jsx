@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ShipWheelIcon } from 'lucide-react';
+import { MessageCircleMoreIcon } from 'lucide-react';
 import React, { useState } from 'react'
 import { login } from '../lib/api';
 
@@ -34,7 +34,7 @@ const LoginPage = () => {
       <div className='w-full lg:w-1/2 p-4 sm:p-6 md:p-8 flex flex-col'>
       {/* LOGO */}
       <div className='mb-4 flex items-center justify-start gap-2'>
-        <ShipWheelIcon className='size-9 text-primary' />
+        <MessageCircleMoreIcon className='size-9 text-primary' />
         <span className='text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider'>
           Chat Up
         </span>
